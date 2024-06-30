@@ -1,0 +1,24 @@
+{
+  "name": "homebridge-renlty-lock",
+  "version": "1.0.0",
+  "description": "homebridge-plugin",
+  "main": "index.js",
+  "keywords": [
+    "homebridge-plugin",
+    "rently-lock"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "homebridge": ">=0.2.5",
+    "node": ">=7.0.0"
+  },
+  "peerDependencies": {
+    "axios": "^1.6.8",
+    "homebridge": "^1.7.0"
+  },
+  "dependencies": {}
+}
