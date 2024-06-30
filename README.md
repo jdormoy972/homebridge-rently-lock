@@ -4,7 +4,10 @@ This Homebridge plugin allows you to control your door lock controled the Rently
 
 ## Completion
 
-**This plugin is still in devwlopment.**
+**This plugin is still in development.**
+One crutial item is to figure out the device ID that need to use used for the put/get requests.
+
+In early developments, I used the Tools **Charles** to view all api calls made by the app. I then was able to pick up which endpoints were used to control the devices. Now we need to figure out which endpoint returns the list of devices based on user account.
 
 ## Features
 
