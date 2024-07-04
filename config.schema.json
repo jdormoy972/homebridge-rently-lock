@@ -1,0 +1,29 @@
+{
+  "pluginAlias": "HomebridgeRentlyLock",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "email": {
+        "title": "Email",
+        "type": "string",
+        "required": true,
+        "placeholder": "email@example.com",
+        "format": "email"
+      },
+      "password": {
+        "title": "Password",
+        "type": "string",
+        "required": true,
+        "placeholder": "password"
+      },
+      "device-id": {
+        "title": "Device ID",
+        "type": "string",
+        "required": true,
+        "placeholder": "device-id"
+      }
+    }
+  }
+}

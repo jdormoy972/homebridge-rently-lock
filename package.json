@@ -1,24 +1,44 @@
 {
-  "name": "homebridge-renlty-lock",
+  "private": true,
+  "displayName": "Homebridge Rently Lock",
+  "name": "homebridge-rently-lock",
   "version": "1.0.0",
-  "description": "homebridge-plugin",
-  "main": "index.js",
-  "keywords": [
-    "homebridge-plugin",
-    "rently-lock"
-  ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "A short description about what your plugin does.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/USERNAME/GITHUB_PROJECT_NAME.git"
   },
-  "author": "",
-  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/USERNAME/GITHUB_PROJECT_NAME/issues"
+  },
   "engines": {
-    "homebridge": ">=0.2.5",
-    "node": ">=7.0.0"
+    "node": "^18.17.0 || ^20.9.0",
+    "homebridge": "^1.8.0"
   },
-  "peerDependencies": {
-    "axios": "^1.6.8",
-    "homebridge": "^1.7.0"
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "eslint src/**/*.ts --max-warnings=0",
+    "watch": "npm run build && npm link && nodemon",
+    "build": "rimraf ./dist && tsc",
+    "prepublishOnly": "npm run lint && npm run build"
   },
-  "dependencies": {}
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.14.1",
+    "eslint": "^9.6.0",
+    "homebridge": "^1.8.3",
+    "nodemon": "^3.1.4",
+    "rimraf": "^5.0.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "wretch": "^2.9.0"
+  }
 }
