@@ -43,20 +43,23 @@ export class RentlyLockAccessory {
     );
 
     // each service must implement at-minimum the "required characteristics" for the given service type
-    // see https://developers.homebridge.io/#/service/Lightbulb
+    // see https://developers.homebridge.io/#/service/LockMechanism
 
-    // register handlers for the On/Off Characteristic
     this.service
       .getCharacteristic(this.platform.Characteristic.LockCurrentState)
-      .onSet(this.setLockedState.bind(this)) // SET - bind to the matching method below
-      .onGet(this.getLockedState.bind(this)); // GET - bind to the matching method below
+      .onGet(this.handleLockCurrentStateGet.bind(this));
+
+    this.service
+      .getCharacteristic(this.platform.Characteristic.LockTargetState)
+      .onGet(this.handleLockCurrentStateGet.bind(this)) // idk if there's a different endpoint for this
+      .onSet(this.handleLockTargetStateSet.bind(this));
   }
 
   /**
    * Handle "SET" requests from HomeKit
    * These are sent when the user changes the state of an accessory, for example, turning on a Light bulb.
    */
-  async setLockedState(value: CharacteristicValue) {
+  async handleLockTargetStateSet(value: CharacteristicValue) {
     this.RentlyApi.setLockedState(this.accessory.context.id, value as boolean);
     this.platform.log.debug("Set Characteristic Locked ->", value);
   }
@@ -74,12 +77,19 @@ export class RentlyLockAccessory {
    * @example
    * this.service.updateCharacteristic(this.platform.Characteristic.On, true)
    */
-  async getLockedState(): Promise<CharacteristicValue> {
+  async handleLockCurrentStateGet(): Promise<CharacteristicValue> {
     const isLocked = await this.RentlyApi.getLockedState(
       this.accessory.context.id
     );
+    const characteristicValue = isLocked
+      ? this.platform.Characteristic.LockCurrentState.SECURED
+      : this.platform.Characteristic.LockCurrentState.UNSECURED;
 
     this.platform.log.debug("Get Characteristic IsLocked ->", isLocked);
+    this.platform.log.debug(
+      "Get Characteristic CharacteristicValue ->",
+      characteristicValue
+    );
 
     // if you need to return an error to show the device as "Not Responding" in the Home app:
     // throw new this.platform.api.hap.HapStatusError(this.platform.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE);
