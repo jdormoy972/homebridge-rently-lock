@@ -68,6 +68,8 @@ export class HomebridgeRentlyLock implements DynamicPlatformPlugin {
   async registerLocks() {
     this.log.info("Registering locks");
 
+    await this.RentlyAPI.login();
+
     const rentlyLocks = await this.RentlyAPI.getAllPropertyDevices();
 
     for (const rentlyLock of rentlyLocks) {
