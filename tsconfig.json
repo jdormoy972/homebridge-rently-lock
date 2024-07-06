@@ -4,7 +4,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "dist",
+    "outDir": "src",
     "rootDir": "src",
     "lib": ["DOM", "ES2022"],
     "module": "ES2022",

@@ -8,10 +8,10 @@ import {
   Service,
 } from "homebridge";
 
-import { RentlyLockAccessory } from "./platformAccessory.js";
-import { RentlyAPI } from "./rently-api/RentlyAPI.js";
-import { PLATFORM_NAME, PLUGIN_NAME } from "./settings.js";
-import { RentlyLock } from "./types.js";
+import { RentlyLockAccessory } from "homebridge-rently-lock/src/platformAccessory.js";
+import { RentlyAPI } from "homebridge-rently-lock/src/rently-api/RentlyAPI.js";
+import { PLATFORM_NAME, PLUGIN_NAME } from "homebridge-rently-lock/src/settings.js";
+import { RentlyLock } from "homebridge-rently-lock/src/types.js";
 
 /**
  * HomebridgePlatform

@@ -6,7 +6,7 @@ import {
   LockTargetStateGetResponse,
   RentlyLock,
   SetLockStateResponse,
-} from "../types";
+} from "homebridge-rently-lock/src/types";
 
 const LOGIN_URL = "https://remotapp.rently.com/oauth/token/";
 const BASE_URL = "https://app2.keyless.rocks/api/";
