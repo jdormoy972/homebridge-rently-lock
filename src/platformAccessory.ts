@@ -1,8 +1,8 @@
 import { CharacteristicValue, PlatformAccessory, Service } from "homebridge";
 
-import { HomebridgeRentlyLock } from "homebridge-rently-lock/src/platform.js";
-import { RentlyAPI } from "homebridge-rently-lock/src/rently-api/RentlyAPI.js";
-import { RentlyLock } from "homebridge-rently-lock/src/types.js";
+import { HomebridgeRentlyLock } from "./platform.js";
+import { RentlyAPI } from "./rently-api/RentlyAPI.js";
+import { RentlyLock } from "./types.js";
 
 /**
  * Platform Accessory

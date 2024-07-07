@@ -1,7 +1,7 @@
 import { API } from "homebridge";
 
-import { HomebridgeRentlyLock } from "homebridge-rently-lock/src/platform.js";
-import { PLATFORM_NAME } from "homebridge-rently-lock/src/settings.js";
+import { HomebridgeRentlyLock } from "./platform.js";
+import { PLATFORM_NAME } from "./settings.js";
 
 /**
  * This method registers the platform with Homebridge

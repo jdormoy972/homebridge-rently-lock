@@ -1,12 +1,12 @@
 export type AuthResponse =
   | {
-      success: true;
-      access_token: string;
-    }
+    success: true;
+    access_token: string;
+  }
   | {
-      success: false;
-      message: string;
-    };
+    success: false;
+    message: string;
+  };
 
 export type SetLockStateResponse = {
   success: boolean;

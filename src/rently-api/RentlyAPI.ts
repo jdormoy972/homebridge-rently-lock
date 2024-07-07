@@ -6,7 +6,7 @@ import {
   LockTargetStateGetResponse,
   RentlyLock,
   SetLockStateResponse,
-} from "homebridge-rently-lock/src/types";
+} from "../types";
 
 const LOGIN_URL = "https://remotapp.rently.com/oauth/token/";
 const BASE_URL = "https://app2.keyless.rocks/api/";
@@ -92,7 +92,7 @@ export class RentlyAPI {
         .get(ENDPOINTS.PROPERTY_DEVICES(propertyId))
         .json<DeviceListResponse>();
 
-      response.lock.forEach((lock) => rentlyLocks.push(lock));
+      response.lock.forEach((lock: RentlyLock) => rentlyLocks.push(lock));
     }
 
     return rentlyLocks;
