@@ -8,10 +8,10 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/USERNAME/GITHUB_PROJECT_NAME.git"
+    "url": "https://github.com/jdormoy972/homebridge-rently-lock"
   },
   "bugs": {
-    "url": "https://github.com/USERNAME/GITHUB_PROJECT_NAME/issues"
+    "url": "https://github.com/jdormoy972/homebridge-rently-lock"
   },
   "engines": {
     "node": "^18.17.0 || ^20.9.0",
@@ -28,15 +28,15 @@
     "homebridge-plugin"
   ],
   "devDependencies": {
-    "@types/node": "^20.14.9",
-    "@typescript-eslint/eslint-plugin": "^7.14.1",
-    "@typescript-eslint/parser": "^7.14.1",
-    "eslint": "^7.15.0",
-    "homebridge": "^1.8.3",
-    "nodemon": "^3.1.4",
+    "@types/node": "^20.12.13",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "homebridge": "^1.8.2",
+    "nodemon": "^3.1.2",
     "rimraf": "^5.0.7",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.2"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "wretch": "^2.9.0"
