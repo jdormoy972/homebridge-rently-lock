@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "HomebridgeRentlyLock",
+  "pluginAlias": "homebridge-rently-lock-test",
   "pluginType": "platform",
   "singular": true,
   "schema": {
