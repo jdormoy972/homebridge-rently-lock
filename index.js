@@ -21,6 +21,8 @@ class LockMechanism {
     this.lockService.getCharacteristic(this.Characteristic.LockTargetState)
       .onGet(this.handleLockTargetStateGet.bind(this))
       .onSet(this.handleLockTargetStateSet.bind(this));
+
+    this.fetchDeviceId();
   }
 
   getServices() {
@@ -35,6 +37,22 @@ class LockMechanism {
     });
     this.token = response.data.access_token;
   }
+  async fetchDeviceId() {
+    await this.login();
+
+    const response_ = await axios.get('https://app2.keyless.rocks/api/properties?search_key=&page=1&keyless_app=true&per_page=100&account=&root_community_id=', {
+      headers: { Authorization: `${this.token}` }
+    });
+    const propertyId = response_.data.properties[0].id;
+    this.log(`Fetched property ID: ${propertyId}`);
+
+    const response = await axios.get(`https://app2.keyless.rocks/api/properties/${propertyId}/assetsDeviceDetails`, {
+      headers: { Authorization: `${this.token}` }
+    });
+
+    this.config.deviceId = response.data.devices.locks[0].id;
+    this.log(`Fetched device ID: ${this.config.deviceId}`);
+  }
 
   async handleLockTargetStateGet() {
     await this.login();
@@ -42,6 +60,8 @@ class LockMechanism {
     const response = await axios.get(`https://app2.keyless.rocks/api/devices/${deviceId}`, {
       headers: { Authorization: `${this.token}` }
     });
+
+    this.log(`Lock state: ${response.data.status.mode.type}`);
     return response.data.status.mode.type === 'locked' ? this.Characteristic.LockCurrentState.SECURED : this.Characteristic.LockCurrentState.UNSECURED;
   }
 
@@ -60,5 +80,6 @@ class LockMechanism {
     } else if (command === 'unlock') {
       this.lockService.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.UNSECURED);
     }
+    await new Promise(resolve => setTimeout(resolve, 5000));
   }
 }
