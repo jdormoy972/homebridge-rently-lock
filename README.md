@@ -51,9 +51,10 @@ Once configured, you can control your door lock using the Home app on your iOS d
 ## TODO List
 
 - [ ] Fetch the device ID automatically
+- [ ] When Status of lock is changed, update lock status homebridge side based on the response
 - [ ] Publish the plugin to npm
 - [ ] Add support for multiple door locks
-- [ ] Improve error handling and logging
+- [ ] Add error handling and logging
 - [ ] Add unit tests
 
 ## Contributing
