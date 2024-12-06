@@ -19,6 +19,9 @@ In early developments, I used the Tools **Charles** to view all api calls made b
 To install the plugin, use the following command:
 
 - Add this directory to /var/lib/homebridge/node_modules on your HomeBridge device.
+- npm init -y
+- npm install --save homebridge-lib axios
+- npm link
 - Update the config file as described below in **Basic Configuration**
 
 ## Basic Configuration
@@ -32,7 +35,8 @@ To configure the plugin, you need to use your email and password for the Rently 
       "accessory": "LockMechanism",
       "name": "My Lock",
       "email": "your-email@email.com",
-      "password": "your-password"
+      "password": "your-password",
+      "deviceId": "Lock Id"
     }
   ]
 }

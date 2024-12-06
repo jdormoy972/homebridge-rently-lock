@@ -38,7 +38,8 @@ class LockMechanism {
 
   async handleLockTargetStateGet() {
     await this.login();
-    const response = await axios.get('https://app2.keyless.rocks/api/devices/door-lock-id', {
+    const deviceId = this.config.deviceId;
+    const response = await axios.get(`https://app2.keyless.rocks/api/devices/${deviceId}`, {
       headers: { Authorization: `${this.token}` }
     });
     return response.data.status.mode.type === 'locked' ? this.Characteristic.LockCurrentState.SECURED : this.Characteristic.LockCurrentState.UNSECURED;
@@ -47,8 +48,17 @@ class LockMechanism {
   async handleLockTargetStateSet(value) {
     await this.login();
     const command = value === this.Characteristic.LockTargetState.SECURED ? 'lock' : 'unlock';
-    await axios.put('https://app2.keyless.rocks/api/devices/door-lock-id', { commands: { mode: command } }, {
+    const deviceId = this.config.deviceId;
+
+    await axios.put(`https://app2.keyless.rocks/api/devices/${deviceId}`, { commands: { mode: command } }, {
       headers: { Authorization: `${this.token}` }
     });
+
+    // Update the lock state based on the command
+    if (command === 'lock') {
+      this.lockService.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.SECURED);
+    } else if (command === 'unlock') {
+      this.lockService.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.UNSECURED);
+    }
   }
 }
