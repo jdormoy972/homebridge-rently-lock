@@ -35,8 +35,7 @@ To configure the plugin, you need to use your email and password for the Rently 
       "accessory": "LockMechanism",
       "name": "My Lock",
       "email": "your-email@email.com",
-      "password": "your-password",
-      "deviceId": "Lock Id"
+      "password": "your-password"
     }
   ]
 }
