@@ -1,11 +1,11 @@
 import type { API } from 'homebridge';
 
-import { ExampleHomebridgePlatform } from './platform.js';
-import { PLATFORM_NAME } from './settings.js';
+import { TestHomebridgePlatform } from './platform';
+import { PLATFORM_NAME } from './settings';
 
 /**
- * This method registers the platform with Homebridge
+ * This method registers   the platform with Homebridge
  */
 export default (api: API) => {
-  api.registerPlatform(PLATFORM_NAME, ExampleHomebridgePlatform);
+  api.registerPlatform(PLATFORM_NAME, TestHomebridgePlatform);
 };
