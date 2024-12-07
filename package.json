@@ -1,6 +1,6 @@
 {
-  "name": "homebridge-plugin-name",
-  "displayName": "Plugin Name",
+  "name": "homebridge-test",
+  "displayName": "Test New Template ",
   "type": "module",
   "version": "1.0.0",
   "private": true,
@@ -27,7 +27,7 @@
     "build": "rimraf ./dist && tsc",
     "lint": "eslint . --max-warnings=0",
     "prepublishOnly": "npm run lint && npm run build",
-    "watch": "npm run build && npm link && nodemon"
+    "watch": "npm run build && hb-service link && nodemon"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
