@@ -11,6 +11,18 @@
         "type": "string",
         "required": true,
         "default": "Example Dynamic Platform"
+      },
+      "email": {
+        "title": "Email",
+        "type": "string",
+        "format": "email",
+        "required": true
+      },
+      "password": {
+        "title": "Password",
+        "type": "string",
+        "format": "password",
+        "required": true
       }
     }
   }

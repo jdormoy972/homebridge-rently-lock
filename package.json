@@ -1,10 +1,10 @@
 {
-  "name": "homebridge-test",
-  "displayName": "Test New Template ",
+  "name": "homebridge-trial",
+  "displayName": "First trial",
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "A short description about what your plugin does.",
+  "description": "LOL.",
   "author": "Your Name",
   "license": "Apache-2.0",
   "homepage": "https://github.com/USERNAME/GITHUB_PROJECT_NAME#readme",
@@ -27,7 +27,8 @@
     "build": "rimraf ./dist && tsc",
     "lint": "eslint . --max-warnings=0",
     "prepublishOnly": "npm run lint && npm run build",
-    "watch": "npm run build && hb-service link && nodemon"
+    "watch": "npm run build && sudo hb-service link",
+    "restart_": "sudo hb-service unlink && npm run watch && sudo hb-service restart"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
@@ -35,10 +36,15 @@
     "@types/node": "^22.8.6",
     "eslint": "^9.14.0",
     "homebridge": "^2.0.0-beta.0",
+    "axios": "^1.6.8",
     "nodemon": "^3.1.7",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.12.2"
+  },
+  "dependencies": {
+    "homebridge-lib": "^7.1.0",
+    "axios": "^1.6.8"
   }
 }
