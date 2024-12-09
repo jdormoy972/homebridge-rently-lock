@@ -1,9 +1,10 @@
-import type { CharacteristicValue, PlatformAccessory, PlatformConfig, Service } from 'homebridge';
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { CharacteristicValue, PlatformAccessory, Service } from 'homebridge';
 
 import type { ExampleHomebridgePlatform } from './platform.ts';
 import { login, fetchLockState, setLockState } from './api.js';
 
-import axios from 'axios';
 
 /**
  * Platform Accessory
