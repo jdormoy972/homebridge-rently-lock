@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "HomebridgeRentlyLock",
+  "pluginAlias": "RentlyHomebridgePlugin",
   "pluginType": "platform",
   "singular": true,
   "strictValidation": false,

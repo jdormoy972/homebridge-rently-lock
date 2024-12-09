@@ -1,7 +1,7 @@
 import type { CharacteristicValue, PlatformAccessory, PlatformConfig, Service } from 'homebridge';
 
 import type { ExampleHomebridgePlatform } from './platform.ts';
-import { login, fetchPropertyId, fetchDeviceId, fetchLockState, setLockState } from './api.js';
+import { login, fetchLockState, setLockState } from './api.js';
 
 import axios from 'axios';
 
