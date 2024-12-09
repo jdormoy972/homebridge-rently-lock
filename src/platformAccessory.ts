@@ -1,7 +1,7 @@
 import type { CharacteristicValue, PlatformAccessory, PlatformConfig, Service } from 'homebridge';
 
 import type { ExampleHomebridgePlatform } from './platform.ts';
-import { login } from './api.js';
+import { login, fetchPropertyId, fetchDeviceId, fetchLockState, setLockState } from './api.js';
 
 import axios from 'axios';
 
@@ -13,7 +13,6 @@ import axios from 'axios';
 export class ExamplePlatformAccessory {
   private service: Service;
   token: any;
-  // config: any;
   deviceId: any;
 
   /**
@@ -23,14 +22,14 @@ export class ExamplePlatformAccessory {
 
   constructor(
     private readonly platform: ExampleHomebridgePlatform,
-    // public readonly config: PlatformConfig,
     private readonly accessory: PlatformAccessory,
   ) {
     // set accessory information
     this.accessory.getService(this.platform.Service.AccessoryInformation)!
-      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Default-Manufacturer')
-      .setCharacteristic(this.platform.Characteristic.Model, 'Default-Model')
-      .setCharacteristic(this.platform.Characteristic.SerialNumber, 'Default-Serial');
+      .setCharacteristic(this.platform.Characteristic.Manufacturer, this.accessory.context.device.manufacturer)
+      .setCharacteristic(this.platform.Characteristic.Model, this.accessory.context.device.model_number)
+      .setCharacteristic(this.platform.Characteristic.SerialNumber, this.accessory.context.device.model_number)
+      .setCharacteristic(this.platform.Characteristic.ConfiguredName, this.accessory.context.device.exampleDisplayName);
 
     // get the LightBulb service if it exists, otherwise create a new LightBulb service
     // you can create multiple services for each accessory
@@ -43,7 +42,9 @@ export class ExamplePlatformAccessory {
       this.service = this.accessory.getService(this.platform.Service.LockMechanism) || this.accessory.addService(this.platform.Service.LockMechanism);
     }
 
-    this.fetchDeviceId();
+    // this.storeDeviceId();
+    this.deviceId = accessory.context.device.id;
+    this.platform.log.debug(`Fetched device ID: ${this.deviceId}`);
     // set the service name, this is what is displayed as the default name on the Home app
     // in this example we are using the name we stored in the `accessory.context` in the `discoverDevices` method.
     this.service.setCharacteristic(this.platform.Characteristic.Name, accessory.context.device.exampleDisplayName);
@@ -63,79 +64,61 @@ export class ExamplePlatformAccessory {
   }
 
 
-  // async login() {
-  //   // const { email, password } = this.config;
-  //   const response = await axios.post('https://remotapp.rently.com/oauth/token', {
-  //     email: this.platform.config.email,
-  //     password: this.platform.config.password,
-  //   });
-  //   this.token = response.data.access_token;
-  //   this.platform.log.debug(`Fetched token: ${this.token}`);
+  // async storeDeviceId() {
+  //   this.token = await login(this.platform.config);
+  //   const propertyId = await fetchPropertyId(this.token);
+  //   this.platform.log.debug(`Fetched new property ID: ${propertyId}`);
 
-  //   this.platform.log.debug(`Config: ${this.platform.config.email}`);
+  //   const deviceId = await fetchDeviceId(this.token, propertyId);
+
+  //   this.deviceId = deviceId;
+  //   this.platform.log.debug(`Fetched device ID: ${this.deviceId}`);
   // }
 
-  async fetchDeviceId() {
-    await login(this);
-
-    const response_ = await axios.get('https://app2.keyless.rocks/api/properties?search_key=&page=1&keyless_app=true&per_page=100&account=&root_community_id=', {
-      headers: { Authorization: `${this.token}` }
-    });
-    const propertyId = response_.data.properties[0].id;
-    this.platform.log.debug(`Fetched property ID: ${propertyId}`);
-
-    const response = await axios.get(`https://app2.keyless.rocks/api/properties/${propertyId}/assetsDeviceDetails`, {
-      headers: { Authorization: `${this.token}` }
-    });
-
-    this.platform.log.debug(`Fetched device ID: ${response.data}`);
-    this.deviceId = response.data.devices.locks[0].id;
-    this.platform.log.debug('stored device ID:', this.deviceId);
-    this.platform.log.debug(`Fetched device ID: ${this.deviceId}`);
-  }
-
   async handleLockCurrentStateGet() {
-    await login(this);
-    const deviceId = this.deviceId;
-    const response = await axios.get(`https://app2.keyless.rocks/api/devices/${deviceId}`, {
-      headers: { Authorization: `${this.token}` }
-    });
+    this.token = await login(this.platform.config);
 
-    this.platform.log.debug(`Lock state: ${response.data.status.mode.type}`);
-    this.platform.log.debug(`Lock Actual state: ${response.data.status.mode.type === 'locked' ? this.platform.Characteristic.LockCurrentState.SECURED : this.platform.Characteristic.LockCurrentState.UNSECURED}`);
-    return response.data.status.mode.type === 'locked' ? this.platform.Characteristic.LockCurrentState.SECURED : this.platform.Characteristic.LockCurrentState.UNSECURED;
+    const lockState = await fetchLockState(this.token, this.deviceId);
+    this.platform.log.debug(`Lock state: ${lockState}`);
+    this.platform.log.debug(`Lock Actual state: ${lockState === 'locked' ? this.platform.Characteristic.LockCurrentState.SECURED : this.platform.Characteristic.LockCurrentState.UNSECURED}`);
+    return lockState === 'locked' ? this.platform.Characteristic.LockCurrentState.SECURED : this.platform.Characteristic.LockCurrentState.UNSECURED;
   }
 
   async handleLockTargetStateGet() {
-    await login(this);
-    const deviceId = this.deviceId;
-    const response = await axios.get(`https://app2.keyless.rocks/api/devices/${deviceId}`, {
-      headers: { Authorization: `${this.token}` }
-    });
+    this.token = await login(this.platform.config);
+    const lockState = await fetchLockState(this.token, this.deviceId);
 
-    this.platform.log.debug(`Lock state: ${response.data.status.mode.type}`);
-    this.platform.log.debug(`Lock Actual state: ${response.data.status.mode.type === 'locked' ? this.platform.Characteristic.LockCurrentState.SECURED : this.platform.Characteristic.LockCurrentState.UNSECURED}`);
-    return response.data.status.mode.type === 'locked' ? this.platform.Characteristic.LockCurrentState.SECURED : this.platform.Characteristic.LockCurrentState.UNSECURED;
+    this.platform.log.debug(`Lock state: ${lockState}`);
+    this.platform.log.debug(`Lock Actual state: ${lockState === 'locked' ? this.platform.Characteristic.LockCurrentState.SECURED : this.platform.Characteristic.LockCurrentState.UNSECURED}`);
+    return lockState === 'locked' ? this.platform.Characteristic.LockCurrentState.SECURED : this.platform.Characteristic.LockCurrentState.UNSECURED;
   }
 
   async handleLockTargetStateSet(value: CharacteristicValue) {
-    await login(this);
+    this.token = await login(this.platform.config);
     const command = value === this.platform.Characteristic.LockTargetState.UNSECURED ? 'unlock' : 'lock';
-    const deviceId = this.deviceId;
 
-    await axios.put(`https://app2.keyless.rocks/api/devices/${deviceId}`, { commands: { mode: command } }, {
-      headers: { Authorization: `${this.token}` }
-    });
+    this.platform.log.debug(`Setting lock state to ${command}`);
+    await setLockState(this.token, this.deviceId, command);
 
     // Update the lock state based on the command
     if (command === 'lock') {
       this.platform.log.debug('Setting lock state to SECURED');
       this.service.updateCharacteristic(this.platform.Characteristic.LockCurrentState, this.platform.Characteristic.LockCurrentState.SECURED);
+      await new Promise(resolve => setTimeout(resolve, 5000));
     } else if (command === 'unlock') {
       this.platform.log.debug('Setting lock state to UNSECURED');
       this.service.updateCharacteristic(this.platform.Characteristic.LockCurrentState, this.platform.Characteristic.LockCurrentState.UNSECURED);
+      await new Promise(resolve => setTimeout(resolve, 5000));
     } else {
       this.platform.log.error('Invalid command');
     }
+
+    // Fetch the updated lock state after setting the lock state
+    const updatedLockState = await fetchLockState(this.token, this.deviceId);
+    this.platform.log.debug(`Updated lock state: ${updatedLockState}`);
+
+    // Update the target state based on the updated lock state
+    const targetState = updatedLockState === 'locked' ? this.platform.Characteristic.LockTargetState.SECURED : this.platform.Characteristic.LockTargetState.UNSECURED;
+    this.service.updateCharacteristic(this.platform.Characteristic.LockTargetState, targetState);
   }
 }

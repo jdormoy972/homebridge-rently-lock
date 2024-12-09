@@ -1,19 +1,19 @@
 {
-  "name": "homebridge-trial",
-  "displayName": "First trial",
+  "name": "homebridge-rently-lock",
+  "displayName": "Rently Lock Plugin",
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "LOL.",
-  "author": "Your Name",
+  "description": "This plugin will allow you to connect your lock from Rently using Homebridge.",
+  "author": "Jerome Dormoy",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/USERNAME/GITHUB_PROJECT_NAME#readme",
+  "homepage": "https://github.com/jdormoy972/homebridge-rently-lock/blob/Development/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/USERNAME/GITHUB_PROJECT_NAME.git"
+    "url": "https://github.com/jdormoy972/homebridge-rently-lock"
   },
   "bugs": {
-    "url": "https://github.com/USERNAME/GITHUB_PROJECT_NAME/issues"
+    "url": "https://github.com/jdormoy972/homebridge-rently-lock/issues"
   },
   "keywords": [
     "homebridge-plugin"

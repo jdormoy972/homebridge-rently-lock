@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-export async function login(this_: any) {
+export async function login(config: any) {
     // const { email, password } = this.config;
     const response = await axios.post('https://remotapp.rently.com/oauth/token', {
-        email: this_.platform.config.email,
-        password: this_.platform.config.password,
+        email: config.email,
+        password: config.password,
     });
-    this_.token = response.data.access_token;
-    this_.platform.log.debug(`Fetched token: ${this_.token}`);
+    return response.data.access_token;
+    // this_.platform.log.debug(`Fetched token: ${this_.token}`);
 
-    this_.platform.log.debug(`Config: ${this_.platform.config.email}`);
+    // this_.platform.log.debug(`Config: ${this_.platform.config.email}`);
 }
 
 export async function fetchPropertyId(token: string): Promise<string> {
@@ -34,7 +34,23 @@ export async function fetchLockState(token: string, deviceId: string): Promise<s
 }
 
 export async function setLockState(token: string, deviceId: string, command: string) {
-    await axios.post(`https://app2.keyless.rocks/api/devices/${deviceId}/${command}`, {}, {
+    await axios.put(`https://app2.keyless.rocks/api/devices/${deviceId}`, { commands: { mode: command } }, {
         headers: { Authorization: `${token}` }
     });
+
+}
+
+export interface DeviceInfo {
+    id: string;
+    device_name: string;
+    occupant_setting: string;
+    // Add other properties if needed
+}
+
+
+export async function fetchDeviceInfo(token: string, propertyId: string): Promise<DeviceInfo[]> {
+    const response = await axios.get(`https://app2.keyless.rocks/api/properties/${propertyId}/assetsDeviceDetails`, {
+        headers: { Authorization: `${token}` }
+    });
+    return response.data.devices.locks;
 }

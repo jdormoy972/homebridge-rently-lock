@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "ExampleHomebridgePlugin",
+  "pluginAlias": "HomebridgeRentlyLock",
   "pluginType": "platform",
   "singular": true,
   "strictValidation": false,
@@ -10,7 +10,7 @@
         "title": "Name",
         "type": "string",
         "required": true,
-        "default": "Example Dynamic Platform"
+        "default": "Rently Lock Plugin"
       },
       "email": {
         "title": "Email",
