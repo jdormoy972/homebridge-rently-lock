@@ -33,13 +33,10 @@ To configure the plugin, you need to use your email and password for the Rently 
       "name": "Rently Lock Plugin",
       "email": "youremail@example.com",
       "password": "yourPassword",
-      "platform": "RentlyHomebridgePlugin",
-      "_bridge": {
-    "username": "0E:51:14:62:54:5E",
-    "port": 30095
-      }
+      "platform": "RentlyHomebridgePlugin"
   }
-    ]}```
+    ]}
+    ```
 
 Replace `"youremail@example.com"` and `"yourPassword"` with your actual Rently app email and password.
 
