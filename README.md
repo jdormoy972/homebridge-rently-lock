@@ -5,6 +5,7 @@ This Homebridge plugin allows you to control your door lock controlled by the [R
 ## Completion
 
 **This plugin is still in development.**
+
 See [TODO list](#todo-list). Lots of items need to be done before getting the plugin validated.
 
 In early developments, I used the Tools **Charles** to view all API calls made by the app. I was then able to pick up which endpoints were used to control the devices. Now we need to figure out which endpoint returns the list of devices based on the user account.
@@ -14,6 +15,7 @@ I am a TypeScript noob... Don't judge
 ## Features
 
 - Seamless door lock integration with HomeKit
+
 - Control your door lock directly from the Home app
 
 ## Installation
@@ -21,6 +23,7 @@ I am a TypeScript noob... Don't judge
 To install the plugin, use the following command:
 
 - Search from HomeBridge UI page
+
 - Or run the following command: `npm i homebridge-rently-lock`
 
 ## Basic Configuration
@@ -28,15 +31,17 @@ To install the plugin, use the following command:
 To configure the plugin, you need to use your email and password for the Rently app. Add the following configuration to the plugin Config Editor when prompted or:
 
 ```json
-{    "platforms": [
-  {
+{
+  "platforms": [
+    {
       "name": "Rently Lock Plugin",
       "email": "youremail@example.com",
       "password": "yourPassword",
       "platform": "RentlyHomebridgePlugin"
-  }
-    ]}
-    ```
+    }
+  ]
+}
+```
 
 Replace `"youremail@example.com"` and `"yourPassword"` with your actual Rently app email and password.
 
