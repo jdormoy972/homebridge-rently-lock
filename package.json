@@ -3,7 +3,7 @@
   "displayName": "Rently Lock Plugin",
   "type": "module",
   "version": "3.0.0",
-  "private": true,
+  "private": false,
   "description": "This plugin will allow you to connect your lock from Rently using Homebridge.",
   "author": "Jerome Dormoy",
   "license": "Apache-2.0",
